@@ -3,16 +3,16 @@
 # Print each line, exit on error
 set -ev
 
-# Install the built package
-conda create --yes -n docenv python=$CONDA_PY
-source activate docenv
-conda install -yq --use-local mdtraj
-
-# We don't use conda for these
-pip install -I sphinx_rtd_theme==0.1.9 msmb_theme==1.2.0
 
 # Install doc requirements
+conda config --set safety_checks disabled
+conda config --add channels omnia
+conda config --add channels conda-forge
 conda install -yq --file docs/requirements.txt
+pip install -U awscli msmb_theme==1.2.0
+which gcc
+which g++
+python setup.py install
 
 # Make docs
 cd docs && make html && cd -
